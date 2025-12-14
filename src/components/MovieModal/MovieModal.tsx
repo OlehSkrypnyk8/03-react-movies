@@ -10,6 +10,9 @@ interface MovieModalProps {
 
 function MovieModal({ movie, onClose }: MovieModalProps) {
   useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         onClose();
@@ -17,6 +20,7 @@ function MovieModal({ movie, onClose }: MovieModalProps) {
     }
     document.addEventListener("keydown", handleKeyDown);
     return () => {
+      document.body.style.overflow = originalOverflow;
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [onClose]);
